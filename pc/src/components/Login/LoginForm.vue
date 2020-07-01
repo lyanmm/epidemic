@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import {login} from "../../network/request";
 
   export default {
     name: "LoginForm",
@@ -46,6 +46,11 @@
     },
     methods: {
       login() {
+        // window.sessionStorage.setItem('token', 'signed');
+        // window.sessionStorage.setItem('wid', 1);
+        // window.sessionStorage.setItem('account', 1);
+        // this.$router.push('/manage')
+
         let loginData = {};
         this.$refs['loginFormRef'].validate(async valid => {
           if (!valid) {
@@ -53,7 +58,7 @@
           }
           loginData.account = this.loginForm.username;
           loginData.password = this.loginForm.password;
-          await axios.post('http://localhost:8081/ssm/login',loginData)
+          await login(loginData)
             .then(res => {
               if (res.data.resCode === 0) {
                 window.sessionStorage.setItem('token', 'signed');

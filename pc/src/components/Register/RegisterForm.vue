@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import {register} from "../../network/request";
 
   export default {
     name: "RegisterForm",
@@ -89,7 +89,7 @@
           registerData.name = this.registerForm.name;
           registerData.account = this.registerForm.username;
           registerData.password = this.registerForm.pwd;
-          await axios.post('http://localhost:8081/ssm/register', registerData)
+          await register(registerData)
             .then(res => {
               if (res.data.resCode === 0) {
                 this.$message.success('注册成功！');

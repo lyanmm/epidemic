@@ -5,7 +5,7 @@
         <el-input placeholder="请输入条件" v-model="searchData">
           <el-select v-model="select" slot="prepend" placeholder="请选择条件">
             <el-option label="编号" value="id"></el-option>
-            <el-option label="手机号" value="phone"></el-option>
+            <el-option label="姓名" value="name"></el-option>
             <el-option label="日期" value="time"></el-option>
           </el-select>
           <el-button slot="append" icon="el-icon-search" @click="search">查询</el-button>
@@ -66,8 +66,7 @@
 
 <script>
   import LineChart from "../../Common/LineChart";
-  import axios from 'axios'
-
+  import {search} from "../../../network/request";
 
   export default {
     name: "Search",
@@ -93,15 +92,17 @@
         if (select === '' || data === '') {
           return;
         } else if (select === 'id') {
-          url = `http://localhost:8081/ssm/news/getUser?id=${data}`;
+          url = `/news/getUser?id=${data}`;
+        } else if (select === 'date') {
+          url = `/users/getList/time?time=${data}`;
         } else {
-          url = `http://localhost:8081/ssm/users/getList/${select}?${select}=${data}`;
+          url = `/users/getList/${select}?${select}=${data}`;
         }
         console.log(url)
-        await axios.get(url)
+        await search(url)
           .then(res => {
             if (res.status !== 500) {
-              if (select === 'time') {
+              if (select === 'time' || select === 'name') {
                 this.tableData = res.data.data.data;
                 this.res = `搜索到共 ${res.data.data.total} 条记录`
               } else {

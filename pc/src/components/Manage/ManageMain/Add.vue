@@ -34,7 +34,7 @@
 
 <script>
   import Moment from 'moment'
-  import axios from 'axios'
+  import {postAddForm} from "../../../network/request";
 
   export default {
     name: "Add",
@@ -91,7 +91,8 @@
           addData.train = this.addForm.train;
           addData.time = this.addForm.time;
           addData.wid = window.sessionStorage.getItem('wid');
-          await axios.post('http://localhost:8081/ssm/users/add', addData)
+          console.log(addData)
+          await postAddForm(addData)
             .then(res => {
               if (res.data.resCode === 0) {
                 this.$message.success('添加成功！');

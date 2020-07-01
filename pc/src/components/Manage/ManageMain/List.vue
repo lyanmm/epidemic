@@ -54,7 +54,7 @@
 
 <script>
   import XLSX from 'xlsx'
-  import axios from 'axios'
+  import {getListData} from "../../../network/request";
 
   export default {
     name: "List",
@@ -68,7 +68,7 @@
     },
     methods: {
       async getList() {
-        await axios.post('http://localhost:8081/ssm/news/getList').then(res =>{
+        await getListData().then(res => {
           this.tableData = res.data.data.data;
         })
       },
@@ -93,7 +93,7 @@
     margin: 0 20px 0 5px;
   }
 
-  .el-button{
+  .el-button {
     margin-bottom: 10px;
   }
 </style>

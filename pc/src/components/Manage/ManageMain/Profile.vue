@@ -27,7 +27,7 @@
 
 <script>
   import QRCode from 'qrcode'
-  import axios from 'axios'
+  import {change} from "../../../network/request";
 
   export default {
     name: "Profile",
@@ -95,7 +95,7 @@
         formData.old_password = this.profileForm.oldPwd;
         formData.new_password = this.profileForm.pwd;
         formData.account = window.sessionStorage.getItem('account');
-        await axios.put('http://localhost:8081/ssm/update', formData)
+        await change(formData)
           .then(res=>{
             if (res.data.resCode === 0) {
               this.$message.success('修改成功！');
